@@ -4,6 +4,7 @@ public class demo{
 	coordinate coordinates;
 	coordinates = new coordinate();
 	
+	
 	System.out.println(coordinates.ViewX());
 	coordinates.SetX(5);
 	coordinates.SetY(6);
