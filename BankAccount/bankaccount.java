@@ -32,23 +32,42 @@ public class bankaccount{
     }
 
     public void setAccount(int account){
-	this.account = account;
+	if(account > 100000000 && account < 999999998){
+	    this.account = account;
+	}else{
+	    this.account = 999999999;
+	    System.out.println("Error | Account Number out of bounds");
+	}
     }
 
     public void setPin(int pin){
 	this.pin = pin;
     }
 
-    public void Deposit(float b){
-	this.balance += balance;
+    public boolean Deposit(float b){
+	if(b > 0){
+	    this.balance += balance;
+	    System.out.println("Account Balance: " + String.valueOf(balance));
+	    return true;
+	}else{
+	    System.out.println("Error | invalid deposit | Account Balance: " + String.valueOf(balance));
+	    return false;
+	}
     }
     
     public boolean Withdraw(float x){
-	if ((balance - x) < 0){
+	if(x > 0){
+	    if ((balance - x) < 0){
+		System.out.println("Invalid transaction; Account Balance: " + String.valueOf(balance));
+		return false;
+	    }else{
+		balance -= x;
+		System.out.println("Account Balance: " + String.valueOf(balance));
+		return true;
+	    }
+	}else{
+	    System.out.println("Error | Invalid withdrawal" + "\n Account Balance: " + String.valueOf(balance));
 	    return false;
-	}
-	else{
-	    return true;
 	}
     }
 
@@ -60,6 +79,10 @@ public class bankaccount{
         else{
 	    return false;
 	}
+    }
+
+    public String toString(){
+	return String.valueOf(account) + String.valueOf(balance) + username;
     }
 
 }
