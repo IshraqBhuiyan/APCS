@@ -21,10 +21,10 @@ public class Wizard extends Adventurer{
 
 
     public void SpecialAttack(Adventurer other){
-	int damage = rand.nextInt(5) + this.INT / 2;
+	int damage = rand.nextInt(5) + this.getINT() / 2;
 	if(super.hit(other, 5)){
-	    other.setHP(other.getHP - damage);
-	    this.setMana(this.getMana - 2);
+	    other.setHP(other.getHP() - damage);
+	    this.setMana(this.getMana() - 2);
 	    System.out.println(this.getName() + " hit " + other.getName() + " and did " + damage + " damage");
 	}else{
 	    System.out.println(this.getName() + " missed " + other.getName());
@@ -42,7 +42,7 @@ public class Wizard extends Adventurer{
     
     //set methods
 
-    public int setMana(int Mana){
+    public void setMana(int Mana){
 	this.Mana = Mana;
     }
 

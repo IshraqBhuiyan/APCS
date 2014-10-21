@@ -22,8 +22,8 @@ public class Rogue extends Adventurer{
     public void SpecialAttack(Adventurer other){
 	int damage = rand.nextInt(5) + 4;
 	if(super.hit(other, 5)){
-	    other.setHP(other.getHP - damage);
-	    this.setEndurance(this.getEndurance - 2);
+	    other.setHP(other.getHP() - damage);
+	    this.setEndurance(this.getEndurance() - 2);
 	    System.out.println(this.getName() + " dealt " + damage + " to " + other.getName());
 	}else{
 	    System.out.println(this.getName() + " missed " + other.getName());

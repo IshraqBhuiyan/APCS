@@ -23,7 +23,7 @@ public class Warrior extends Adventurer{
 
     public void Attack(Adventurer other){
 	if(super.hit(other, 3)){
-	    other.setHP(other.getHP - STR);
+	    other.setHP(other.getHP() - this.getSTR());
 	    System.out.println(this.getName() + " dealt " + this.getSTR() + " damage to " + other.getName());
 	} else {
 	    System.out.println(this.getName() + " missed " + other.getName());
@@ -33,10 +33,10 @@ public class Warrior extends Adventurer{
     public void SpecialAttack(Adventurer other){
 	int damage = rand.nextInt(rage) + this.getSTR();
 	if(super.hit(other, 5)){
-	    other.setHP(other.getHP - damage);
+	    other.setHP(other.getHP() - damage);
 	    System.out.println(this.getName() + " dealt " + damage + " damage to " + other.getName() + " in a special attack!");
 	} else {
-	    System.out.println(this.getName + " missed " + other.getName());
+	    System.out.println(this.getName() + " missed " + other.getName());
 	}
     }
 
@@ -60,4 +60,5 @@ public class Warrior extends Adventurer{
     public void setWarcry(String warcry){
 	this.warcry = warcry;
 
+    }
 }

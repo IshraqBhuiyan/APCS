@@ -11,7 +11,7 @@ public class Adventurer{
     }
     
     public Adventurer(String name){
-	this(s, 20, 0, 0, 0);
+	this(name, 20, 0, 0, 0);
     }
 
     public Adventurer(String name, int HP, int STR, int DEX, int INT){
@@ -25,7 +25,7 @@ public class Adventurer{
     //toString method
 
     public String toString(){
-	return this.getName() + " " + (String)HP;
+	return this.getName() + " " + this.getHP();
     }
 
     //Adventurer Class Actions
@@ -42,7 +42,7 @@ public class Adventurer{
 
     public void Attack(Adventurer other){
 	if(hit(other, 3)){
-	    other.setHP(other.getHP - 1);
+	    other.setHP(other.getHP() - 1);
 	    System.out.println(this.getName() + " dealt 1 damage to " + other.getName());
 	}else{
 	    System.out.println(this.getName() + " attempted to hit " + other.getName() + " but failed!");
@@ -54,7 +54,7 @@ public class Adventurer{
     public void SpecialAttack(Adventurer other){
 	if(hit(other, 5)){
 	    int damage = rand.nextInt(5) + 2;
-	    other.setHP(other.getHP - damage);
+	    other.setHP(other.getHP() - damage);
 	    System.out.println(this.getName() + " successfully dealt a special " + damage + " damage to " + other.getName());
 	} else {
 	    System.out.println(this.getName() + " failed his/her special attack on " + other.getName());
