@@ -2,7 +2,6 @@ import java.util.Random;
 
 public class Wizard extends Adventurer{
     private int Mana;
-    private Random rand = new Random();
 
     public Wizard(){
 	this("Tim");
@@ -13,24 +12,40 @@ public class Wizard extends Adventurer{
     }
     
     public Wizard(String name, int mana){
-	super(name, 20, 0, 0, 10);
+	super(name, 25, 8, 10, 25);
 	this.setMana(mana);
     }
 
     //wizard methods
 
-
-    public void SpecialAttack(Adventurer other){
-	int damage = rand.nextInt(5) + this.getINT() / 2;
-	if(super.hit(other, 5)){
+    public void Attack(Adventurer other){
+	Random r = new Random();
+	System.out.println(this + " attacks " + other);
+	if(hit(other)){
+	    int damage = r.nextInt(4) + 1;
 	    other.setHP(other.getHP() - damage);
-	    this.setMana(this.getMana() - 2);
-	    System.out.println(this.getName() + " hit " + other.getName() + " and did " + damage + " damage");
+	    System.out.println(" and deals " + damage + " damage!");
 	}else{
-	    System.out.println(this.getName() + " missed " + other.getName());
+	    System.out.println(" but missed!");
 	}
-	System.out.println(this.getStats());
-	System.out.println(other.getStats());
+	setMana(getMana()+1);
+    }
+    
+    public void SpecialAttack(Adventurer other){
+	Random r = new Random();
+	if(getMana() >= 10){
+	    System.out.println(this + " hurls a ball of fire at " + other);
+	    if(hitMagic(other)){
+		int damage = 2 + r.nextInt(getINT())+r.nextInt(getINT());
+		other.setHP(other.getHP()-damage);
+		System.out.println(" and ignites him for " + damage+" damage!");
+	    }else{
+		System.out.println(" but instead hits an innocent bystander!");
+	    }
+	    setMana(getMana()-2);
+	}else{
+	    System.out.println(this + " doesn't have enough Mana");
+	}
     }
 
     //get methods
@@ -39,13 +54,22 @@ public class Wizard extends Adventurer{
        return Mana;
     }
 
+    public String getStats(){
+	return super.getStats() + " Mana  " + getMana();
+    }
+
     
     //set methods
 
     public void setMana(int Mana){
 	this.Mana = Mana;
     }
-
+    
+    public void defaultStats(){
+	this.setHP(25);
+	this.setMana(20);
+	this.setLife(true);
+    }
 
     
 }

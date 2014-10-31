@@ -3,40 +3,47 @@ import java.util.Random;
 public class Warrior extends Adventurer{
     private int  rage;
     private String warcry;
-    private Random rand = new Random();
 
     public Warrior(){
 	this("Lief");
     }
 
     public Warrior(String name){
-	this(name,"Valhalllaaaaa!!", 3, 4);
+	this(name,"Valhalllaaaaa!!", 18);
     }
 
-    public Warrior(String name, String warcry, int STR, int rage){
-	super(name, 25, STR, 0, 0);
-	this.setWarcry(warcry);
-	this.setRage(rage);
+    public Warrior(String name, String warcry, int rage){
+	super(name, 40, 18, 10, 10);
+	setWarcry(warcry);
+        setRage(rage);
     }
 
     //warrior methods
 
     public void Attack(Adventurer other){
-	if(super.hit(other, 3)){
-	    other.setHP(other.getHP() - this.getSTR());
-	    System.out.println(this.getName() + " dealt " + this.getSTR() + " damage to " + other.getName());
-	} else {
-	    System.out.println(this.getName() + " missed " + other.getName());
+	Random r = new Random();
+	if(hit(other)){
+	    int damage = r.nextInt(getSTR()/2)+1;
+	    other.setHP(other.getHP()-damage);
+	    setRage(getRage() + 1);
+	    System.out.println(this + "attacked and hit" + other + "for " + damage + "damage!");
+	}else{
+	    System.out.println(this + "attacked " + other + "but sadly missed!");
 	}
     }
 
     public void SpecialAttack(Adventurer other){
-	int damage = rand.nextInt(rage) + this.getSTR();
-	if(super.hit(other, 5)){
-	    other.setHP(other.getHP() - damage);
-	    System.out.println(this.getName() + " dealt " + damage + " damage to " + other.getName() + " in a special attack!");
-	} else {
-	    System.out.println(this.getName() + " missed " + other.getName());
+	Random r = new Random();
+	if(getRage() >=10){
+	    if(hit(other)){
+		int damage = r.nextInt(getSTR())+4;
+		System.out.println(this + " unleashes his fury upon " + other + " for " + damage + " damage!");
+	    }else{
+		System.out.println(this + " unleashes his rage upon  " + other + " but has terrible aim and hits a rock instead!");
+	    }
+	    setRage(getRage()-2);
+	}else{
+	    System.out.println("Oh noes, not enough rage!");
 	}
     }
 
@@ -53,12 +60,18 @@ public class Warrior extends Adventurer{
 
     //set methods
 
-    public void setRage(int rage){
-	this.rage = rage;
+    public void setRage(int i){
+	i = rage;
     }
     
     public void setWarcry(String warcry){
 	this.warcry = warcry;
 
+    }
+
+    public void defaultStats(){
+	this.setHP(40);
+	this.setRage(18);
+	this.setLife(true);
     }
 }

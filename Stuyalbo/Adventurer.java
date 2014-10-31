@@ -1,8 +1,9 @@
 import java.util.Random;
 
-public class Adventurer{
+public abstract class Adventurer{
     private String name;
     private int HP, STR, DEX, INT;
+    private boolean life; //tells you if player is alive or not
 
     private Random rand = new Random();
 
@@ -11,7 +12,7 @@ public class Adventurer{
     }
     
     public Adventurer(String name){
-	this(name, 20, 0, 0, 0);
+	this(name, 30, 10, 10, 10);
     }
 
     public Adventurer(String name, int HP, int STR, int DEX, int INT){
@@ -20,6 +21,7 @@ public class Adventurer{
 	this.setSTR(STR);
 	this.setDEX(DEX);
 	this.setINT(INT);
+	life = true;
     }
 
     //toString method
@@ -30,40 +32,26 @@ public class Adventurer{
 
     //Adventurer Class Actions
 
-    public boolean hit(Adventurer other, int attack){
-	int chance = rand.nextInt(attack);
-	if(chance < 2){
-	    return true;
-	} else{
-	    return false;
-	}
+    public boolean hit(Adventurer other){
+	Random r = new Random();
+	double chance = 0.15 + .75*((double)getDEX() / other.getDEX() * 10)/(getDEX()+other.getDEX());
+	//System.out.println(chance);
+	return r.nextDouble()<chance;  
 
     }
 
-    public void Attack(Adventurer other){
-	if(hit(other, 3)){
-	    other.setHP(other.getHP() - 1);
-	    System.out.println(this.getName() + " dealt 1 damage to " + other.getName());
-	}else{
-	    System.out.println(this.getName() + " attempted to hit " + other.getName() + " but failed!");
-	}
-	System.out.println(this.getStats());
-	System.out.println(other.getStats());
+    public boolean hitMagic(Adventurer other){
+	Random r = new Random();
+	double chance = 0.15 + .75*((double)getINT() / other.getINT() * 10)/(getINT()+other.getINT());
+	//System.out.println(chance);
+	return r.nextDouble()<chance;
     }
 
-    public void SpecialAttack(Adventurer other){
-	if(hit(other, 5)){
-	    int damage = rand.nextInt(5) + 2;
-	    other.setHP(other.getHP() - damage);
-	    System.out.println(this.getName() + " successfully dealt a special " + damage + " damage to " + other.getName());
-	} else {
-	    System.out.println(this.getName() + " failed his/her special attack on " + other.getName());
-	}
-	System.out.println(this.getStats());
-	System.out.println(other.getStats());
-    }
+    public abstract void Attack(Adventurer other);
 
+    public abstract void SpecialAttack(Adventurer other);
 
+    public abstract void defaultStats();
 
     //Get Methods
     public String getName(){
@@ -98,23 +86,43 @@ public class Adventurer{
     //Set Methods
 
     public void setHP(int health){
-	HP = health;
+	this.HP = health;
     }
 
     public void setSTR(int strength){
-	STR = strength;
+	this.STR = strength;
     }
 
     public void setDEX(int dexterity){
-	DEX = dexterity;
+	this.DEX = dexterity;
     }
 
     public void setINT(int intelligence){
-	INT = intelligence;
+	this.INT = intelligence;
     }
 
     public void setName(String s){
-	name = s;
+	this.name = s;
+    }
+    
+    //these 3 functions determine whether a player is alive or not
+    public void setLife(boolean b){
+	this.life = b;
+    }
+
+    public boolean getLife(){
+	return life;
+    }
+
+    public boolean Alive(){
+	if(!getLife()){
+	    return false;
+	}
+	if(getHP()<= 0){
+	    System.out.println(this + " has died!");
+	    setLife(false);
+	}
+	return getLife();
     }
 
 }

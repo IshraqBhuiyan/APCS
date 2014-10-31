@@ -1,47 +1,72 @@
 import java.util.Random;
 
 public class Rogue extends Adventurer{
-    private int endurance;
-    private Random rand = new Random();
+    private int stamina;
 
     public Rogue(){
 	this("Steve");
     }
 
     public Rogue(String name){
-	this(name, 5);
+	this(name, 20);
     }
     
-    public Rogue(String name, int endurance){
-	super(name, 20, 0, 10, 0);
-	this.setEndurance(endurance);
+    public Rogue(String name, int stamina){
+	super(name, 30, 8, 10, 10);
+	this.setStamina(stamina);
     }
 
     //rogue methods
 
-    public void SpecialAttack(Adventurer other){
-	int damage = rand.nextInt(5) + 4;
-	if(super.hit(other, 5)){
+    public void Attack(Adventurer other){
+	Random r = new Random();
+	System.out.println(this + " attacks " + other);
+	if(hit(other)){
+	    int damage = r.nextInt(4)+(getSTR()/2)+1;
 	    other.setHP(other.getHP() - damage);
-	    this.setEndurance(this.getEndurance() - 2);
-	    System.out.println(this.getName() + " dealt " + damage + " to " + other.getName());
+	    System.out.println(" and deals " + damage + " damage!");
 	}else{
-	    System.out.println(this.getName() + " missed " + other.getName());
+	    System.out.println(" but unfortunately misses!");
 	}
-	System.out.println(this.getStats());
-	System.out.println(other.getStats());
+	setStamina(getStamina() + 1);
+    }
+
+    public void SpecialAttack(Adventurer other){
+	Random r = new Random();
+	if(getStamina()>=10){
+	    setStamina(getStamina()-2);
+	    System.out.println(this + " tries to backstab " + other);
+	    if(hit(other) || hit(other)){
+		int damage = r.nextInt(getSTR()+getDEX()/2)+2;
+		other.setHP(other.getHP() - damage);
+		System.out.println(" and causes " + other + " to bleed for " + damage + " damage!");
+	    }else{
+		System.out.println(" but instead hits a squirrel!");
+	    }
+	}else{
+	    System.out.println("not enough stamina!");
+	}
     }
 
     //get methods
 
-    public int getEndurance(){
-	return endurance;
+    public int getStamina(){
+	return stamina;
     }
 
+    public String getStats(){
+	return super.getStats() + " Stamina " + getStamina();
+    }
     
     //set methods
 
-    public void setEndurance(int endurance){
-	this.endurance = endurance;
+    public void setStamina(int stamina){
+	this.stamina = stamina;
+    }
+
+    public void defaultStats(){
+	this.setHP(30);
+	this.setStamina(20);
+	this.setLife(true);
     }
 }
