@@ -7,7 +7,7 @@ public class Game2{
     public static Adventurer[] makeParty(){
 	Scanner in = new Scanner(System.in);
 	int size=0;
-	while(size < 0 || size > 4){
+	while(size < 1 || size > 4){
 	    System.out.println("How big will your part be? (1 to 4 members)");
 	    size = in.nextInt();
 	}
@@ -144,8 +144,8 @@ public class Game2{
 		    }
 		    if(!boss.Alive()){
 		    }
-		    living[i].getStats();
-		    boss.getStats();
+		    System.out.println( living[i].getStats());
+		    System.out.println(boss.getStats());
 		}
 	    }
 	}
@@ -177,8 +177,7 @@ public class Game2{
     }
     
     public static void main(String[]args){
-	Adventurer[] party = null;
-	party = makeParty();
+	Adventurer[] party = makeParty();
 	Adventurer boss = makeboss();
 	combat(party, boss);
 	fightAgain(party);
